@@ -55,7 +55,7 @@ echo "
   </style>
 </head>
 <body>
-
+  <div>
   <div class="card">
     <div class="label">CPU Usage</div>
     <div class="value">$CPU</div>
@@ -79,6 +79,7 @@ echo "
     <div class="label">Hostname</div>
     <div class="value">$HOSTNAME</div>
   </div>
+</div>
   <div class="card" style="max-width: 90vw\; overflow-x: auto\; padding: 10px\;">
     <div class="label">Home Directory Tree</div>
     <div class="value" style="font-size: 0.75em\; text-align: left\; white-space: pre\;">
