@@ -12,6 +12,13 @@ DISK=$(df -h / | awk 'NR==2 {print $3 " / " $2}' | xargs)
 # Get current time
 TIME=$(date +"%Y-%m-%d %H:%M:%S" | xargs)
 
+# Hostname
+HOSTNAME=$(hostname)
+
+# Home directory tree (first 2 levels)
+HOMEDIR=$(find ~ -maxdepth 2 -type d | sed 's/$/<br>/' | head -n 20)
+
+
 echo "
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +75,16 @@ echo "
     <div class="label">Last Updated</div>
     <div class="value">$TIME</div>
   </div>
+  <div class="card">
+    <div class="label">Hostname</div>
+    <div class="value">$HOSTNAME</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Home Directory Tree</div>
+    <div class="value" style="font-size: 0.8em; white-space: pre-wrap;">$HOMEDIR</div>
+  </div>
+
 </body>
 </html>
 " > /home/japansg/git/mss2025-project-template/234/japan.html
