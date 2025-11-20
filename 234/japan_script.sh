@@ -86,7 +86,12 @@ echo "
       <pre><code>$HOMEDIR</code></pre>
     </div>
   </div>
-
+  <div class="card" style="width: auto\; max-width: 90vw\; overflow-x: auto\;">
+    <div class="label">Home Directory Tree</div>
+    <div class="value" style="font-size: 0.8em\; text-align: left\;">
+      <pre style="margin: 0\;"><code>$HOMEDIR</code></pre>
+    </div>
+  </div>
 </body>
 </html>
 " > /home/japansg/git/mss2025-project-template/234/japan.html
