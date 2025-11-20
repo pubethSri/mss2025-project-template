@@ -75,7 +75,7 @@ echo "
 
 REPO_DIR="/home/japansg/git/mss2025-project-template/" # e.g., /home/user/my-project
 GITHUB_USERNAME="japanSG"
-GITHUB_PAT=$(cat /home/japansg/git/mss2025-project-template/.pat) # Ensure this PAT has repo write permissions
+GITHUB_PAT=$(cat /home/japansg/git/mss2025-project-template/234/.pat) # Ensure this PAT has repo write permissions
 
 # Navigate to the repository directory
 cd "$REPO_DIR" || exit 1
