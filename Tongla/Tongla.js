@@ -13,13 +13,13 @@ export const systemData = {
     usedGB: 6.56,
     percent: 35.29
   },
-  lastUpdated: "2025-11-21 00:03:02 ICT",
+  lastUpdated: "2025-11-21 00:04:01 ICT",
   processes: `
     PID COMMAND         %CPU %MEM
-   9178 systemd-network  1.2  0.2
-   9179 kworker/1:1-eve  0.3  0.0
+   9178 systemd-network  0.9  0.2
+   9179 kworker/1:1-eve  0.2  0.0
      25 kworker/1:0-cgr  0.2  0.0
    1759 kworker/0:0-eve  0.2  0.0
-   9617 sshd             0.1  0.1
+    813 vmtoolsd         0.1  0.2
   `
 };
