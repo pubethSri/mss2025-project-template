@@ -43,6 +43,14 @@ echo "
       width: 250px;
       text-align: center;
     }
+    .tree {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 10px;
+      padding: 20px;
+      text-align: center;
+    }
     .label {
       font-size: 1.2em;
       color: #555;
@@ -81,7 +89,7 @@ echo "
   </div>
 </div>
 <div class="container">
-  <div class="card" style="width: auto\; max-width: 90vw\; overflow-x: auto\; padding: 10px\;">
+  <div class="tree" style="width: auto\; max-width: 90vw\; overflow-x: auto\; padding: 10px\;">
     <div class="label">Home Directory Tree</div>
     <div class="value" style="font-size: 0.75em\; text-align: left\; white-space: pre\;">
       $HOMEDIR
