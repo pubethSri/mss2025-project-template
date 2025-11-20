@@ -87,15 +87,19 @@ echo "
     <div class="label">Hostname</div>
     <div class="value">$HOSTNAME</div>
   </div>
-</div>
-<div class="container">
-<div class="card" style="width: 70%\; max-width: 800px\;">
-  <div class="label">Home Directory Tree</div>
-  <div class="value" style="font-size: 0.8em\; text-align: left\;">
-    <pre><code>$HOMEDIR</code></pre>
+  </div>
+</code>
+
+<div class="container" style="justify-content: flex-start\;">
+  <div class="card" style="width: 100%\; max-width: 800px\; overflow-x: auto\; margin-left: 20px\;">
+    <div class="label">Home Directory Tree</div>
+    <div class="value" style="font-size: 0.8em\; text-align: left\; padding: 10px\; background: \#f9f9f9\; border: 1px solid \#ddd\; border-radius: 4px\;">
+      <pre style="margin: 0\; white-space: pre-wrap\;"><code>$HOMEDIR </pre>
+    </div>
   </div>
 </div>
-</div>
+
+
 </div>
 </body>
 </html>
