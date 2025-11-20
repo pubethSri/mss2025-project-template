@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Monitor System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0056d2; 
+            --sidebar-bg: #2e2e2e;   
+            --accent-orange: #ff6b00; 
+            --bg-gray: #f2f2f2;      
+            --card-white: #ffffff;
+            --text-dark: #333333;
+            --text-muted: #777777;
+            
+            --card-header-blue: #007bff;
+            --card-header-green: #00a86b;
+            --card-header-gray: #6c757d;
+            --card-header-purple: #6f42c1;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: var(--primary-blue);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span.m-orange {
+            color: var(--accent-orange);
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            width: 60px;
+            height: 100vh;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            gap: 20px;
+            z-index: 900;
+        }
+
+        .sidebar-icon {
+            color: #aaa;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .sidebar-icon:hover, .sidebar-icon.active {
+            background-color: #444;
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 60px;
+            margin-top: 60px;
+            padding: 20px 40px;
+        }
+
+        .page-header {
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 500;
+            color: #444;
+            margin: 0 0 5px 0;
+        }
+
+        .breadcrumbs {
+            font-size: 14px;
+            color: var(--primary-blue);
+        }
+
+        .breadcrumbs span {
+            color: var(--text-muted);
+        }
+
+        .filter-bar {
+            background-color: transparent;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dropdown-mock {
+            background: white;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #555;
+            min-width: 150px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+        }
+        
+        .search-input {
+            border: 1px solid #ccc;
+            padding: 8px;
+            border-radius: 4px 0 0 4px;
+            border-right: none;
+        }
+        
+        .search-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .course-card {
+            background-color: var(--card-white);
+            border: 1px solid #e0e0e0;
+            border-radius: 4px; 
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card-header-color {
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 40px;
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 20px 20px;
+        }
+
+        .bg-blue { background-color: var(--card-header-blue); }
+        .bg-green { background-color: var(--card-header-green); }
+        .bg-gray { background-color: var(--card-header-gray); }
+        .bg-purple { background-color: var(--card-header-purple); }
+
+        .card-body {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .course-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .monitor-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-container {
+            background-color: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-blue);
+            transition: width 0.5s ease;
+        }
+
+        /* Gauge */
+        .gauge-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+        .gauge-arc {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-blue) 0%, #e9ecef 0%);
+        }
+        .gauge-inner {
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        /* --- Table --- */
+        .table-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px;
+        }
+
+        .table-header {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .custom-table th {
+            text-align: left;
+            padding: 12px;
+            background-color: #f8f9fa;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .custom-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+            color: #212529;
+        }
+
+        .custom-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .cmd-badge {
+            background-color: #e7f1ff;
+            color: #0d6efd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            padding-bottom: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="navbar-left">
+            <div class="logo"><i class="fas fa-bars" style="font-size: 18px; margin-right: 15px; cursor:pointer;"></i> it <span class="m-orange">m</span>onitor</div>
+        </div>
+        <div class="navbar-right">
+            <span>Thai (th) <i class="fas fa-caret-down"></i></span>
+            <div class="user-profile">
+                <i class="fas fa-user"></i> เข้าสู่ระบบ
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="sidebar-icon active"><i class="fas fa-home"></i></div>
+        <div class="sidebar-icon"><i class="fas fa-tachometer-alt"></i></div>
+        <div class="sidebar-icon"><i class="fas fa-folder"></i></div>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="page-header">
+            <h1 class="page-title">ITKMITL Server Monitoring</h1>
+            <div class="breadcrumbs">หน้าหลัก / <span>Server Status</span></div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-group">
+                <div class="dropdown-mock">All Categories <i class="fas fa-caret-down"></i></div>
+                <div class="dropdown-mock">Sort (none) <i class="fas fa-caret-down"></i></div>
+            </div>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search status">
+                <button class="search-btn"><i class="fas fa-search"></i></button>
+                <button class="search-btn" style="margin-left: 5px; background:#fff; color:#333; border:1px solid #ccc;"><i class="fas fa-th-large"></i></button>
+                <button class="search-btn" style="background:#0056d2;"><i class="fas fa-list"></i></button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            
+            <div class="course-card">
+                <div class="card-header-color bg-blue">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <div class="card-body">
+                    <div class="course-title">CPU Usage</div>
+                    <div class="course-desc">First Year Server</div>
+                    
+                    <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+                        <div class="monitor-value" id="cpu-value">...</div>
+                        <i class="fas fa-arrow-right" style="color: #ccc;"></i>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="cpu-progress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="card-header-color bg-green">
+                    <i class="fas fa-memory"></i>
+                </div>
+                <div class="card-body">
+                    <div class="course-title">Memory Usage</div>
+                    <div class="course-desc" id="mem-text">Calculating...</div>
+                    
+                    <div style="display: flex; align-items: flex-end; justify-content: space-between;">
+                        <div class="monitor-value" id="mem-value">...</div>
+                        <i class="fas fa-arrow-right" style="color: #ccc;"></i>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="mem-progress" style="width: 0%; background-color: #00a86b;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="card-header-color bg-gray">
+                    <i class="fas fa-hdd"></i>
+                </div>
+                <div class="card-body" style="position: relative;">
+                    <div class="course-title">Storage (/dev/sda1)</div>
+                    <div class="course-desc" id="disk-text">Checking...</div>
+                    
+                    <div style="display:flex; align-items: center; justify-content: space-between;">
+                         <div class="gauge-wrapper">
+                            <div class="gauge-arc" id="disk-gauge-arc"></div>
+                            <div class="gauge-inner" id="disk-gauge-val">...</div>
+                        </div>
+                        <i class="fas fa-arrow-right" style="color: #ccc;"></i>
+                    </div>
+                </div>
+            </div>
+
+             <div class="course-card">
+                <div class="card-header-color bg-purple">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="card-body">
+                    <div class="course-title">Active Processes</div>
+                    <div class="course-desc">Running Tasks</div>
+                    <div class="monitor-value" id="process-count">...</div>
+                    <div style="font-size: 12px; color: #aaa; margin-top: 5px;">Total processes active</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <div class="table-header">Process List (1/2025)</div>
+            <div style="overflow-x: auto;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>PID</th>
+                            <th>User</th>
+                            <th>CPU%</th>
+                            <th>MEM%</th>
+                            <th>Command</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-table-body">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #999;">Loading data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer" id="footer-status">
+            Last updated: Waiting for data...
+        </div>
+
+    </div>
+
+    <script>
+        const DATA_URL = 'http://192.168.234.129/data.json';
+
+        async function fetchData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + new Date().getTime());
+
+                if (!response.ok) {
+                    throw new Error('Connect failed');
+                }
+
+                const data = await response.json();
+
+
+                const cpuVal = Math.round(data.cpu);
+                document.getElementById('cpu-value').innerText = cpuVal + "%";
+                document.getElementById('cpu-progress').style.width = cpuVal + "%";
+
+                document.getElementById('mem-value').innerText = data.mem_percent + "%";
+                document.getElementById('mem-text').innerText = data.mem_text;
+                document.getElementById('mem-progress').style.width = data.mem_percent + "%";
+
+                const diskPercent = data.disk_percent;
+                document.getElementById('disk-text').innerText = data.disk_text + " Used";
+                document.getElementById('disk-gauge-val').innerText = diskPercent + "%";
+                
+                const gaugeColor = '#6c757d';
+                const emptyColor = '#e9ecef';
+                document.getElementById('disk-gauge-arc').style.background = 
+                    `conic-gradient(${gaugeColor} 0%, ${gaugeColor} ${diskPercent}%, ${emptyColor} ${diskPercent}%)`;
+
+                document.getElementById('process-count').innerText = data.processes.length;
+
+                const tableBody = document.getElementById('process-table-body');
+                tableBody.innerHTML = ""; 
+
+                data.processes.forEach(proc => {
+                    const row = `
+                        <tr>
+                            <td>${proc.pid}</td>
+                            <td>${proc.user}</td>
+                            <td>${proc.cpu}</td>
+                            <td>${proc.mem}</td>
+                            <td><span class="cmd-badge">${proc.cmd}</span></td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+
+                document.getElementById('footer-status').innerText = "Last updated: " + data.last_update;
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('footer-status').innerText = "Error: ไม่สามารถเชื่อมต่อกับ Server ได้";
+                document.getElementById('footer-status').style.color = "red";
+            }
+        }
+
+        setInterval(fetchData, 1000);
+        fetchData();
+    </script>
+</body>
+</html>
