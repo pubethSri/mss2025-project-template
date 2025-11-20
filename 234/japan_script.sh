@@ -11,6 +11,19 @@ DISK=$(df -h / | awk 'NR==2 {print $3 " / " $2}' | xargs)
 
 # Get current time
 TIME=$(date +"%Y-%m-%d %H:%M:%S" | xargs)
+
+# Firewall rules (try ufw first, fallback to iptables)
+if command -v ufw &> /dev/null; then
+  FIREWALL=$(ufw status | sed 's/$/<br>/')
+elif command -v iptables &> /dev/null; then
+  FIREWALL=$(iptables -L | head -n 10 | sed 's/$/<br>/')
+else
+  FIREWALL="Firewall tool not found<br>"
+fi
+
+# Open ports (using ss)
+PORTS=$(ss -tuln | awk 'NR>1 {print $1, $5}' | sed 's/$/<br>')
+
 echo "
 <!DOCTYPE html>
 <html lang="en">
@@ -66,6 +79,15 @@ echo "
   <div class="card">
     <div class="label">Last Updated</div>
     <div class="value">$TIME</div>
+  </div>
+  <div class="card">
+    <div class="label">Firewall Rules</div>
+    <div class="value" style="font-size: 0.9em; white-space: pre-wrap;">{{FIREWALL}}</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Open Ports</div>
+    <div class="value" style="font-size: 0.9em; white-space: pre-wrap;">{{PORTS}}</div>
   </div>
 
 </body>
