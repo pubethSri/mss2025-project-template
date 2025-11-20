@@ -1,0 +1,4 @@
+echo "push status start ..."
+
+CPU_ALL=$(df -h / | tail -n 1 | awk '{print $2}')
+echo $CPU_ALL
