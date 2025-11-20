@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Monitor - Retro Style</title>
+    <style>
+        :root {
+            /* --- Retro Theme Colors --- */
+            --bg-main: #fcfcfc; 
+            --header-gradient-start: #d9d9d9;
+            --header-gradient-end: #a6a6a6;
+            --text-main: #000000;
+            --text-muted: #555555;
+            
+            --title-blue: #003366; 
+            --title-red: #cc0000;
+
+            --accent-color: #3366cc; 
+            --table-header-bg: #e0e0e0;
+            --border-color: #cccccc;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-size: 14pt;
+        }
+
+        /* --- Header --- */
+        header {
+            background: linear-gradient(to bottom, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+            border-bottom: 1px solid #808080;
+            padding: 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .nav-top-right {
+             position: absolute;
+             top: 10px;
+             right: 30px;
+             color: #000;
+             font-size: 11pt;
+             font-weight: bold;
+             text-decoration: none;
+        }
+
+        .header-inner {
+            /* ปรับให้กว้างเต็มจอ เพื่อให้คำว่า Learning ชิดซ้ายมากขึ้น */
+            width: 100%; 
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 30px 40px 0 40px; /* เพิ่ม Padding ซ้ายขวา */
+            height: 80px;
+            box-sizing: border-box;
+        }
+
+        .site-title {
+            font-size: 32pt;
+            color: white;
+            font-weight: normal;
+            text-shadow: 1px 1px 2px #333;
+            margin-bottom: 15px;
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        /* --- Navigation Tabs --- */
+        .nav-menu {
+            display: flex;
+            gap: 3px;
+            margin-bottom: -1px;
+        }
+
+        .nav-item {
+            padding: 8px 25px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+            font-size: 13pt;
+            background-color: #d0d0d0;
+            border: 1px solid #808080;
+            border-bottom: none;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .nav-item.active {
+            background-color: var(--bg-main);
+            color: #000;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            position: relative;
+            top: -2px;
+            border-bottom: 2px solid var(--bg-main); 
+            z-index: 10;
+        }
+        
+        .nav-item:hover:not(.active) {
+            background-color: #e8e8e8;
+        }
+
+        /* --- Content --- */
+        .container {
+            width: 100%;
+            max-width: 1200px; /* ขยายความกว้างเนื้อหาให้สมดุลกับ Header */
+            margin: 0 auto;
+            padding: 20px 40px;
+            box-sizing: border-box;
+        }
+
+        .main-title {
+            color: var(--title-blue);
+            font-size: 24pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .sub-desc {
+            font-size: 13pt;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        /* --- Buttons --- */
+        .button-container {
+            margin: 20px 0 40px 0;
+        }
+        
+        .action-button {
+            display: inline-block;
+            background: linear-gradient(to bottom, #4a80e4 0%, #1e57b8 100%);
+            color: white;
+            padding: 5px 15px;
+            text-decoration: none;
+            font-size: 12pt;
+            font-weight: bold;
+            border: 2px solid #103c85;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .action-button:hover {
+            background: linear-gradient(to bottom, #3366cc 0%, #15408a 100%);
+        }
+        
+        .action-button.secondary {
+            background: linear-gradient(to bottom, #f0f0f0 0%, #d0d0d0 100%);
+            color: black;
+            border: 2px solid #999;
+        }
+        .action-button.secondary:hover {
+             background: linear-gradient(to bottom, #e0e0e0 0%, #c0c0c0 100%);
+        }
+
+        /* --- Data Blocks --- */
+        .grid-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px; /* เพิ่มช่องว่างระหว่าง Block */
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+        }
+
+        .data-block {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .block-header {
+            font-size: 14pt;
+            color: var(--title-blue);
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--title-blue);
+            display: inline-block;
+        }
+
+        .block-value {
+            font-size: 22pt;
+            font-weight: bold;
+            color: #000;
+            float: right;
+        }
+        
+        .block-header::after { content: ""; display: table; clear: both; }
+
+        .sub-text {
+            font-size: 11pt;
+            color: var(--text-muted);
+            margin-top: 5px;
+            display: block;
+            font-style: italic;
+        }
+
+        .progress-bg {
+            background-color: #e0e0e0;
+            height: 12px;
+            margin-top: 15px;
+            border: 1px solid #999;
+        }
+
+        .progress-fill {
+            background-color: var(--accent-color);
+            height: 100%;
+        }
+
+        /* --- Gauge --- */
+        .gauge-wrapper {
+            position: relative;
+            width: 150px;
+            height: 75px;
+            margin: 20px auto 0;
+            overflow: hidden;
+        }
+
+        .gauge-arc {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+
+        .gauge-inner {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 110px;
+            height: 110px;
+            background-color: var(--bg-main);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+
+        .gauge-value {
+            font-size: 20pt;
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* --- Table --- */
+        .section-header-red {
+            color: var(--title-red);
+            font-weight: bold;
+            font-size: 18pt;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-decoration: underline;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12pt;
+        }
+
+        th {
+            text-align: left;
+            font-weight: bold;
+            color: var(--title-blue);
+            background-color: var(--table-header-bg);
+            padding: 8px;
+            border: 1px solid #999;
+        }
+
+        td {
+            padding: 8px;
+            color: black;
+            border: 1px solid #ccc;
+            vertical-align: top;
+        }
+
+        tbody tr:hover td {
+            background-color: #ffffcc;
+        }
+
+        .cmd-tag {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11pt;
+            color: #333;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: var(--text-muted);
+            font-size: 10pt;
+            text-align: right;
+            border-top: 1px dotted #ccc;
+            padding-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="#" class="nav-top-right">About me</a>
+        <div class="header-inner">
+            <div class="site-title">Learning</div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">DASHBOARD</a>
+                <a href="#" class="nav-item">SYSTEM</a>
+                <a href="#" class="nav-item">NETWORK</a>
+                <a href="#" class="nav-item">LOGS</a>
+                <a href="#" class="nav-item">CONFIG</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <h1 class="main-title">System Status Dashboard</h1>
+        
+        <div class="sub-desc">
+            <b>Server Performance Monitoring System</b><br>
+            Real-time dashboard for tracking server health, resource usage, and active processes. 
+            This system provides critical data on CPU load, Memory consumption (RAM), and Disk storage availability 
+            to ensure system stability and performance efficiency.
+        </div>
+        
+        <div class="button-container">
+            <a href="https://www.youtube.com/watch?v=LVsTfx9FIUY" target="_blank" class="action-button">
+                Youtube Channel
+            </a>
+             <a href="#" class="action-button secondary">
+                Download Logs
+            </a>
+        </div>
+
+        <div class="grid-top">
+            <div class="data-block">
+                <div>
+                    <span class="block-header">CPU Load</span>
+                    <span class="block-value">...</span>
+                </div>
+                <div class="progress-bg">
+                    <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <span class="sub-text">Current processor usage</span>
+            </div>
+
+            <div class="data-block">
+                <div>
+                    <span class="block-header">Memory Usage</span>
+                    <span class="block-value">...</span>
+                </div>
+                 <span class="sub-text">Calculating...</span>
+                <div class="progress-bg">
+                    <div class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="data-block">
+                <div>
+                    <span class="block-header">Disk Storage</span>
+                </div>
+
+                <div class="gauge-wrapper">
+                    <div class="gauge-arc"></div>
+                    <div class="gauge-inner">
+                        <span class="gauge-value">...</span>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 5px;">
+                    <span class="sub-text">/dev/sda1 Capacity</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header-red">Active System Processes</div>
+        
+        <div class="table-container">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>PID</th>
+                        <th>User</th>
+                        <th>CPU%</th>
+                        <th>MEM%</th>
+                        <th>Command / Service</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="5" style="text-align:center; color: #555;">Loading process data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            System Status Updated: Waiting for data...
+        </div>
+
+    </div>
+
+    <script>
+        const DATA_URL = 'http://192.168.234.129/data.json'; 
+        
+        const CHART_COLOR_ACCENT = '#3366cc';
+        const CHART_COLOR_EMPTY = '#d0d0d0';
+
+        async function fetchData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + new Date().getTime());
+
+                if (!response.ok) throw new Error('Connect failed');
+
+                const data = await response.json();
+
+                // [CPU]
+                document.querySelector('.data-block:nth-child(1) .block-value').innerText = Math.round(data.cpu) + "%";
+                document.querySelector('.data-block:nth-child(1) .progress-fill').style.width = data.cpu + "%";
+
+                // [Memory]
+                document.querySelector('.data-block:nth-child(2) .block-value').innerText = data.mem_percent + "%";
+                document.querySelector('.data-block:nth-child(2) .sub-text').innerText = data.mem_text;
+                document.querySelector('.data-block:nth-child(2) .progress-fill').style.width = data.mem_percent + "%";
+
+                // [Storage]
+                document.querySelector('.gauge-value').innerText = data.disk_percent + "%";
+                document.querySelector('.data-block:nth-child(3) .sub-text').innerText = data.disk_text + " Used";
+
+                const percent = data.disk_percent;
+                document.querySelector('.gauge-arc').style.background =
+                    `conic-gradient(
+                        from 270deg, 
+                        ${CHART_COLOR_ACCENT} 0%, 
+                        ${CHART_COLOR_ACCENT} ${percent}%, 
+                        ${CHART_COLOR_EMPTY} ${percent}%, 
+                        ${CHART_COLOR_EMPTY} 180deg, 
+                        transparent 180deg
+                    )`;
+
+                // [Table]
+                const tableBody = document.querySelector('tbody');
+                tableBody.innerHTML = ""; 
+
+                data.processes.forEach((proc) => {
+                    const row = `
+                        <tr>
+                            <td align="center">${proc.pid}</td>
+                            <td>${proc.user}</td>
+                            <td align="center">${proc.cpu}</td>
+                            <td align="center">${proc.mem}</td>
+                            <td><span class="cmd-tag">${proc.cmd}</span></td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+
+                document.querySelector('.footer').innerText = "Last updated: " + data.last_update;
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.querySelector('.footer').innerText = "Error connecting to data source.";
+                document.querySelector('.footer').style.color = 'red'; 
+            }
+        }
+
+        setInterval(fetchData, 600000);
+        fetchData();
+    </script>
+</body>
+</html>
