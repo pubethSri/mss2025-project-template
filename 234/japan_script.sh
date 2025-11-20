@@ -32,6 +32,7 @@ echo "
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      flex-direction: row;
       padding: 20px;
     }
     .card {
