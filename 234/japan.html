@@ -1,150 +1,108 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
   <title>Server Stats Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root{
-      --bg:#0b0f10;
-      --panel:#07110b;
-      --muted:#94c98a;
-      --accent:#19a84b;
-      --text:#dfeee1;
-      --sub:#9fcaa0;
-      --card-radius:12px;
-      --card-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      --card-bg: #fff;
+      --panel-bg: #f9f9f9;
+      --card-radius: 8px;
+      --card-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    html,body{height:100%; margin:0;}
-    body{
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#021006 0%, #07110b 60%);
-      color:var(--text);
-      padding:22px;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+      color: #222;
     }
 
-    .container{
-      display:flex;
-      flex-wrap:wrap;
-      gap:14px;
-      align-items:flex-start;
-      justify-content:center;
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      align-items: flex-start;
     }
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(25,168,75,0.08);
-      padding:16px;
-      width:260px;
-      border-radius:var(--card-radius);
-      box-shadow:var(--card-shadow);
-      box-sizing:border-box;
-      text-align:center;
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      padding: 18px;
+      width: 250px;
+      text-align: center;
+      box-sizing: border-box;
     }
 
-    .card .label{
-      font-size:0.95rem;
-      color:var(--sub);
-      font-weight:600;
-      margin-bottom:8px;
+    .card.wide {
+      width: 100%;
+      max-width: 800px;
+      text-align: left;
     }
 
-    .card .value{
-      font-size:1.5rem;
-      color:var(--text);
-      margin-top:4px;
-      font-weight:700;
+    .label {
+      font-size: 1.05rem;
+      color: #555;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
-    .card.wide{
-      width:100%;
-      max-width:900px;
-      text-align:left;
-      padding:18px;
+    .value {
+      font-size: 1.6rem;
+      color: #222;
+      margin-top: 6px;
+      word-break: break-word;
     }
 
-    /* Tree panel */
-    .tree-panel{
-      margin-top:10px;
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
+    /* Tree card specific styles */
+    .tree-wrapper {
+      overflow: hidden;              /* hide any visual overflow from transform */
+      padding: 0;
+      border-radius: calc(var(--card-radius) - 2px);
     }
 
-    /* CSS-only toggle: hidden checkbox controls visual state */
-    #toggle-tree { display:none; }
-    .toggle-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      background: rgba(25,168,75,0.12);
-      color:var(--muted);
-      border:1px solid rgba(25,168,75,0.08);
-      font-weight:600;
-      user-select:none;
-    }
-    .toggle-btn:hover{ background: rgba(25,168,75,0.18); color:var(--text); }
-
-    .tree-wrapper{
-      flex:1 1 auto;
-      overflow:hidden;
-      border-radius:10px;
-      border:1px solid rgba(255,255,255,0.03);
-      background: linear-gradient(180deg, rgba(10,20,10,0.6), rgba(8,18,8,0.4));
+    .tree-card {
+      background: var(--panel-bg);
+      border: 1px solid #e2e2e2;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 6px;
+      box-sizing: border-box;
+      /* ensure the card contents can't push outside container */
+      max-width: 100%;
+      overflow-x: auto;              /* allow horizontal scroll if content is wider */
     }
 
-    .tree-card{
-      padding:12px;
-      max-width:100%;
-      overflow:auto;
-      box-sizing:border-box;
-    }
-
-    .tree-pre{
-      margin:0;
-      white-space:pre;
+    /* The actual tree block that will be visually shifted left */
+    .tree-pre {
+      margin: 0;
+      white-space: pre;              /* preserve whitespace and lines */
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
-      font-size:0.92rem;
-      line-height:1.28;
-      color:var(--muted);
-      transform:translateX(-22px);
-      transition: transform 220ms ease, color 220ms ease;
-      display:block;
+      font-size: 0.9rem;
+      line-height: 1.25;
+      color: #111;
+      display: block;
+      /* translate left visually while staying clipped by .tree-wrapper */
+      transform: translateX(-18px);
+      /* keep transform smooth and limited on small screens */
+      max-width: calc(100% + 60px);  /* allow transformed content to still be scrollable */
     }
 
-    /* When checkbox is checked, remove translate to align tree normally */
-    #toggle-tree:checked ~ .tree-wrapper .tree-card .tree-pre {
-      transform: translateX(0);
-      color:var(--text);
+    /* Responsive adjustments */
+    @media (max-width: 720px) {
+      .card { width: calc(50% - 12px); }
+      .card.wide { width: 100%; max-width: 100%; }
+      .tree-pre { transform: translateX(-10px); font-size: 0.85rem; }
     }
 
-    /* small helper to show an inline status pill */
-    .pill {
-      display:inline-block;
-      padding:4px 8px;
-      border-radius:999px;
-      background: rgba(25,168,75,0.12);
-      color:var(--muted);
-      font-size:0.78rem;
-      border:1px solid rgba(25,168,75,0.06);
-      margin-left:8px;
-    }
-
-    /* responsive */
-    @media (max-width:880px){
-      .card{ width:48%; }
-      .card.wide{ width:100%; max-width:100%; }
-      .tree-pre{ transform:translateX(-12px); }
-    }
-    @media (max-width:520px){
-      .card{ width:100%; }
-      .tree-pre{ transform:translateX(0); font-size:0.86rem; }
+    @media (max-width: 420px) {
+      .card { width: 100%; }
+      .tree-pre { transform: translateX(0); } /* stop translating on tiny screens to avoid clipping */
     }
   </style>
 </head>
@@ -152,12 +110,12 @@
   <div class="container">
     <div class="card">
       <div class="label">CPU Usage</div>
-      <div class="value">8.7%</div>
+      <div class="value">4.8%</div>
     </div>
 
     <div class="card">
       <div class="label">Memory Usage</div>
-      <div class="value">14.6%</div>
+      <div class="value">14.7%</div>
     </div>
 
     <div class="card">
@@ -167,7 +125,7 @@
 
     <div class="card">
       <div class="label">Last Updated</div>
-      <div class="value">2025-11-20 17:28:30</div>
+      <div class="value">2025-11-20 17:30:02</div>
     </div>
 
     <div class="card">
@@ -175,30 +133,15 @@
       <div class="value">ray-server</div>
     </div>
 
-    <div class="card wide" style="margin-left:20px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
-        <div>
-          <div class="label">Home Directory Tree</div>
-        </div>
+    <!-- Home directory tree card -->
+    <div class="card wide" style="margin-left: 20px\;">
+      <div class="label">Home Directory Tree</div>
 
-        <!-- checkbox + label used as an interactive button (no JS) -->
-        <div style="display:flex; align-items:center; gap:8px;">
-          <input id="toggle-tree" type="checkbox" />
-          <label for="toggle-tree" class="toggle-btn" title="Toggle align/offset">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 1px 0 rgba(0,0,0,0.4));">
-              <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Toggle Tree
-            <span class="pill">offset</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="tree-panel">
-        <div class="tree-wrapper">
-          <div class="tree-card" role="region" aria-label="home directory tree">
-            <pre class="tree-pre">/home
+      <!-- wrapper hides anything shifted out and provides the visible card edge -->
+      <div class="tree-wrapper">
+        <!-- inner panel allows scrolling if content is wider than visible area -->
+        <div class="tree-card" role="region" aria-label="home directory tree">
+<pre class="tree-pre">/home
 └── japansg
     ├── git
     │   └── mss2025-project-template
@@ -226,10 +169,10 @@
     └── japan.html
 
 9 directories, 17 files</pre>
-          </div>
         </div>
       </div>
     </div>
   </div>
 </body>
 </html>
+
