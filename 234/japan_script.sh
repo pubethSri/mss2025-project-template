@@ -92,7 +92,7 @@ echo "
   <div class="tree" style="width: auto\; max-width: 90vw\; overflow-x: auto\; padding: 10px\;">
     <div class="label">Home Directory Tree</div>
     <div class="value" style="font-size: 0.8em\; text-align: left\;">
-      $HOMEDIR
+     <pre> $HOMEDIR </pre>
     </div>
   </div>
 </div>
