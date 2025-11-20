@@ -16,7 +16,7 @@ TIME=$(date +"%Y-%m-%d %H:%M:%S" | xargs)
 HOSTNAME=$(hostname)
 
 # Home directory tree (first 2 levels)
-HOMEDIR=$(find ~ -maxdepth 2 -type d | sed 's/$/<br>/' | head -n 20)
+HOMEDIR=$(tree /home)
 
 
 echo "

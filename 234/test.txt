@@ -1,0 +1,27 @@
+/home
+└── japansg
+    ├── git
+    │   └── mss2025-project-template
+    │       ├── 234
+    │       │   ├── japan.html
+    │       │   ├── japan_script.sh
+    │       │   ├── template.html
+    │       │   └── test.txt
+    │       ├── index.html
+    │       ├── README.md
+    │       ├── student1
+    │       │   ├── student1.html
+    │       │   └── student1_script.sh
+    │       ├── student2
+    │       │   ├── student2.html
+    │       │   └── student2_script.sh
+    │       ├── student3
+    │       │   ├── student3.html
+    │       │   └── student3_script.sh
+    │       ├── student4
+    │       │   ├── student4.html
+    │       │   └── student4_script.sh
+    │       └── style.css
+    └── japan.html
+
+9 directories, 16 files
