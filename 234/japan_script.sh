@@ -89,17 +89,40 @@ echo "
   </div>
   </div>
 </code>
-
 <div class="container" style="justify-content: flex-start\;">
   <div class="card" style="width: 100%\; max-width: 800px\; overflow-x: auto\; margin-left: 20px\;">
     <div class="label">Home Directory Tree</div>
     <div class="value" style="font-size: 0.8em\; text-align: left\; padding: 10px\; background: \#f9f9f9\; border: 1px solid \#ddd\; border-radius: 4px\;">
-      <pre style="margin: 0\; white-space: pre-wrap\;"><code>$HOMEDIR </pre>
+      <pre style="margin: 0\; white-space: pre-wrap\;"><code>/home
+└── japansg
+    ├── git
+    │   └── mss2025-project-template
+    │       ├── 234
+    │       │   ├── japan.html
+    │       │   ├── japan_script.sh
+    │       │   ├── template.html
+    │       │   └── test.txt
+    │       ├── index.html
+    │       ├── README.md
+    │       ├── student1
+    │       │   ├── student1.html
+    │       │   └── student1_script.sh
+    │       ├── student2
+    │       │   ├── student2.html
+    │       │   └── student2_script.sh
+    │       ├── student3
+    │       │   ├── student3.html
+    │       │   └── student3_script.sh
+    │       ├── student4
+    │       │   ├── student4.html
+    │       │   └── student4_script.sh
+    │       └── style.css
+    └── japan.html
+
+9 directories, 16 files</code></pre>
     </div>
   </div>
 </div>
-
-
 </div>
 </body>
 </html>
