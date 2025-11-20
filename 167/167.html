@@ -165,36 +165,6 @@
             font-size: 14px;
         }
 
-        .warning {
-            border-color: #f59e0b !important;
-        }
-
-        .warning .progress-fill {
-            background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%);
-        }
-
-        .warning::before {
-            background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%);
-        }
-
-        .critical {
-            border-color: #ef4444 !important;
-        }
-
-        .critical .progress-fill {
-            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
-        }
-
-        .critical::before {
-            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
-        }
-
-        .chart-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: #e2e8f0;
-        }
 
         .server-info {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
@@ -234,10 +204,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .charts-section {
-                grid-template-columns: 1fr;
-            }
-
             .header h1 {
                 font-size: 24px;
             }
@@ -258,7 +224,7 @@
                 <div class="status-dot"></div>
                 <div>
                     <div style="font-weight: 600; font-size: 14px;">Server Online</div>
-                    <div class="last-update" id="lastUpdate">Last updated: 16:00:01 20/11/2025</div>
+                    <div class="last-update" id="lastUpdate">Last updated: 16:40:02 20/11/2025</div>
                 </div>
             </div>
         </div>
@@ -267,22 +233,22 @@
             <div class="metric-card" id="cpuCard">
                 <div class="metric-header">
                     <span class="metric-title">CPU Usage</span>
-                    <div class="metric-value" id="cpuValue">4.0%</div>
+                    <div class="metric-value" id="cpuValue">0%</div>
                 </div>
 
                 <div class="progress-bar">
-                    <div class="progress-fill" id="cpuProgress" style="width: 4.0%"></div>
+                    <div class="progress-fill" id="cpuProgress" style="width: 0%"></div>
                 </div>
             </div>
 
             <div class="metric-card" id="memoryCard">
                 <div class="metric-header">
                     <span class="metric-title">Memory Usage</span>
-                <div class="metric-value" id="memoryValue">14.32%</div>
+                <div class="metric-value" id="memoryValue">14.37%</div>
                 </div>
 
                 <div class="progress-bar">
-                    <div class="progress-fill" id="memoryProgress" style="width: 14.32%"></div>
+                    <div class="progress-fill" id="memoryProgress" style="width: 14.37%"></div>
                 </div>
                 <div class="metric-info">
                     <span id="memoryUsed">0.54 GB</span>
