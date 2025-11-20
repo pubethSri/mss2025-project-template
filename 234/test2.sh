@@ -188,9 +188,7 @@ cat > "$OUT_FILE" <<HTML
 
       <div class="tree-panel">
         <div class="tree-wrapper">
-          <div class="tree-card" role="region" aria-label="home directory tree">
             <pre class="tree-pre">${HOMEDIR_ESCAPED}</pre>
-          </div>
         </div>
       </div>
     </div>
