@@ -41,7 +41,7 @@
                 <div class="card text-white bg-success mb-3">
                     <div class="card-header">Memory Usage</div>
                     <div class="card-body">
-                        <h5 class="card-title" id="memory_display">Loading...</h5>
+                        <h5 class="card-title" id="memory_usage">Loading...</h5>
                         <p class="card-text"><small class="text-white-50">Used / Total RAM.</small></p>
                     </div>
                 </div>
@@ -51,16 +51,16 @@
                     <div class="card-header">Storage Usage</div>
                     <div class="card-body">
                         <h5 class="card-title" id="storage_usage">Loading...</h5>
-                        <p class="card-text"><small class="text-white-50">Filesystem percentage used.</small></p>
+                        <p class="card-text"><small class="text-white-50">Storage percentage used.</small></p>
                     </div>
                 </div>
             </div>
         </div>
         <hr>
         <div class="mt-4 p-3 bg-secondary rounded">
-            <p class="mb-1"><strong>Operating System:</strong> <span id="os_name_version">Loading...</span></p>
-            <p class="mb-1"><strong>System Uptime:</strong> <span id="system_boot_time">Loading...</span></p>
-            <p class="mb-0"><strong>Last updated:</strong> <span id="timestamp">Loading...</span></p>
+            <p class="mb-1"><strong>Operating System:</strong> <span id="os">Loading...</span></p>
+            <p class="mb-1"><strong>System Uptime:</strong> <span id="system_uptime">Loading...</span></p>
+            <p class="mb-0"><strong>Last updated:</strong> <span id="last_updated">Loading...</span></p>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -69,15 +69,15 @@
         {
             $.getJSON("system_status.json?" + new Date().getTime(), function(data)
             {
-                $("#cpu_usage").text(data.cpu_usage);
-                $("#memory_display").text(data.memory_usage + " / " + data.memory_total);
-                $("#storage_usage").text(data.storage_used);
-                $("#os_name_version").text(data.os_name + " " + data.os_version);
-                $("#system_boot_time").text(data.system_boot_time);
-                $("#timestamp").text(data.timestamp);
+                $("#cpu_usage").text(data.cpu_usage + "%");
+                $("#memory_usage").text(data.memory_used + " MB / " + data.memory_total + " MB");
+                $("#storage_usage").text(data.storage_usage + "%");
+                $("#os").text(data.os);
+                $("#system_uptime").text(data.system_uptime);
+                $("#last_updated").text(data.last_updated);
             })
         }
-        setInterval(loadStatus, 1000);
+        loadStatus()
     </script>
 </body>
 </html>
