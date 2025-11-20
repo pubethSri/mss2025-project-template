@@ -17,7 +17,7 @@ storage_usage=$(bc <<< "scale=2; 100 * $storage_used/$storage_total")
 
 last_update=$(date +'%0H:%0M:%0S %0d/%0m/%0Y')
 
-cat << EOF > /home/it67070167/mss2025-project-template/167/index.html
+cat << EOF > /home/it67070167/mss2025-project-template/167/167.html
 <!DOCTYPE html>
 <html lang="th">
 <head>
