@@ -9,15 +9,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #0056d2; /* สีน้ำเงินแบบแถบด้านบน */
-            --sidebar-bg: #2e2e2e;   /* สี sidebar ด้านซ้าย */
-            --accent-orange: #ff6b00; /* สีส้มสำหรับตัว m */
-            --bg-gray: #f2f2f2;      /* สีพื้นหลังเนื้อหา */
+            --primary-blue: #0056d2; 
+            --sidebar-bg: #2e2e2e;   
+            --accent-orange: #ff6b00; 
+            --bg-gray: #f2f2f2;      
             --card-white: #ffffff;
             --text-dark: #333333;
             --text-muted: #777777;
             
-            /* Card Colors */
             --card-header-blue: #007bff;
             --card-header-green: #00a86b;
             --card-header-gray: #6c757d;
@@ -36,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* --- Navbar (Header) --- */
         .navbar {
             background-color: var(--primary-blue);
             height: 60px;
@@ -82,7 +80,6 @@
             cursor: pointer;
         }
 
-        /* --- Sidebar --- */
         .sidebar {
             background-color: var(--sidebar-bg);
             width: 60px;
@@ -112,7 +109,6 @@
             color: white;
         }
 
-        /* --- Main Content --- */
         .main-content {
             margin-left: 60px;
             margin-top: 60px;
@@ -139,7 +135,6 @@
             color: var(--text-muted);
         }
 
-        /* --- Filters Bar --- */
         .filter-bar {
             background-color: transparent;
             display: flex;
@@ -186,7 +181,6 @@
             border-radius: 0 4px 4px 0;
         }
 
-        /* --- Card Grid (เลียนแบบรายวิชา) --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -197,7 +191,7 @@
         .course-card {
             background-color: var(--card-white);
             border: 1px solid #e0e0e0;
-            border-radius: 4px; /* มุมไม่โค้งมาก ตามสไตล์เว็บเก่า */
+            border-radius: 4px; 
             overflow: hidden;
             transition: box-shadow 0.2s;
             display: flex;
@@ -243,7 +237,6 @@
             margin-bottom: 15px;
         }
 
-        /* UI Components inside Cards */
         .monitor-value {
             font-size: 28px;
             font-weight: bold;
@@ -490,8 +483,6 @@
     </div>
 
     <script>
-        // *** 1. ตั้งค่า URL ของ Server (แก้ IP ตามเดิมที่คุณใช้) ***
-        // ใช้ URL เดิมที่คุณใช้อยู่เพื่อให้รันได้แน่นอน
         const DATA_URL = 'http://192.168.234.129/data.json';
 
         async function fetchData() {
@@ -504,33 +495,26 @@
 
                 const data = await response.json();
 
-                // --- 2. อัปเดตข้อมูลบนหน้าเว็บ ---
 
-                // [CPU]
                 const cpuVal = Math.round(data.cpu);
                 document.getElementById('cpu-value').innerText = cpuVal + "%";
                 document.getElementById('cpu-progress').style.width = cpuVal + "%";
 
-                // [Memory]
                 document.getElementById('mem-value').innerText = data.mem_percent + "%";
                 document.getElementById('mem-text').innerText = data.mem_text;
                 document.getElementById('mem-progress').style.width = data.mem_percent + "%";
 
-                // [Disk - Gauge]
                 const diskPercent = data.disk_percent;
                 document.getElementById('disk-text').innerText = data.disk_text + " Used";
                 document.getElementById('disk-gauge-val').innerText = diskPercent + "%";
                 
-                // สี Gauge (เทาพื้นหลัง + สีเทาเข้ม/ส้ม)
                 const gaugeColor = '#6c757d';
                 const emptyColor = '#e9ecef';
                 document.getElementById('disk-gauge-arc').style.background = 
                     `conic-gradient(${gaugeColor} 0%, ${gaugeColor} ${diskPercent}%, ${emptyColor} ${diskPercent}%)`;
 
-                // [Process Count]
                 document.getElementById('process-count').innerText = data.processes.length;
 
-                // [Table]
                 const tableBody = document.getElementById('process-table-body');
                 tableBody.innerHTML = ""; 
 
@@ -547,7 +531,6 @@
                     tableBody.innerHTML += row;
                 });
 
-                // [Footer]
                 document.getElementById('footer-status').innerText = "Last updated: " + data.last_update;
 
             } catch (error) {
@@ -557,8 +540,7 @@
             }
         }
 
-        // Refresh ทุก 1 วินาที (1000ms) ตามเดิม
-        setInterval(fetchData, 600000);
+        setInterval(fetchData, 1000);
         fetchData();
     </script>
 </body>
