@@ -102,24 +102,6 @@ cat > "$OUT_FILE" <<HTML
       gap:12px;
       align-items:flex-start;
     }
-
-    /* CSS-only toggle: hidden checkbox controls visual state */
-    #toggle-tree { display:none; }
-    .toggle-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      background: rgba(25,168,75,0.12);
-      color:var(--muted);
-      border:1px solid rgba(25,168,75,0.08);
-      font-weight:600;
-      user-select:none;
-    }
-    .toggle-btn:hover{ background: rgba(25,168,75,0.18); color:var(--text); }
-
     .tree-wrapper{
       flex:1 1 auto;
       overflow:hidden;
@@ -146,13 +128,6 @@ cat > "$OUT_FILE" <<HTML
       transition: transform 220ms ease, color 220ms ease;
       display:block;
     }
-
-    /* When checkbox is checked, remove translate to align tree normally */
-    #toggle-tree:checked ~ .tree-wrapper .tree-card .tree-pre {
-      transform: translateX(0);
-      color:var(--text);
-    }
-
     /* small helper to show an inline status pill */
     .pill {
       display:inline-block;
@@ -213,14 +188,6 @@ cat > "$OUT_FILE" <<HTML
         <!-- checkbox + label used as an interactive button (no JS) -->
         <div style="display:flex; align-items:center; gap:8px;">
           <input id="toggle-tree" type="checkbox" />
-          <label for="toggle-tree" class="toggle-btn" title="Toggle align/offset">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 1px 0 rgba(0,0,0,0.4));">
-              <path d="M4 12h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Toggle Tree
-            <span class="pill">offset</span>
-          </label>
         </div>
       </div>
 
@@ -253,4 +220,4 @@ git diff-index --quiet HEAD || git commit -m "Automated commit from cron 234 tim
 
 # Push to GitHub using the PAT for authentication
 git push "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git" JapanSG
-echo "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git"
+#echo "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git"
