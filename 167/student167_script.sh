@@ -185,6 +185,36 @@ cat << EOF > /home/it67070167/mss2025-project-template/167/167.html
             font-size: 14px;
         }
 
+        .warning {
+            border-color: #f59e0b !important;
+        }
+
+        .warning .progress-fill {
+            background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%);
+        }
+
+        .warning::before {
+            background: linear-gradient(90deg, #f59e0b 0%, #ef4444 100%);
+        }
+
+        .critical {
+            border-color: #ef4444 !important;
+        }
+
+        .critical .progress-fill {
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .critical::before {
+            background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .chart-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #e2e8f0;
+        }
 
         .server-info {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
@@ -221,6 +251,10 @@ cat << EOF > /home/it67070167/mss2025-project-template/167/167.html
 
         @media (max-width: 768px) {
             .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
                 grid-template-columns: 1fr;
             }
 
