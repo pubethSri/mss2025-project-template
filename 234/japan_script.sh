@@ -22,7 +22,7 @@ else
 fi
 
 # Open ports (using ss)
-PORTS=$(ss -tuln | awk 'NR>1 {print $1, $5}' | sed 's/$/<br>')
+PORTS=$(ss -tuln | awk 'NR>1 {print $1, $5}' | sed 's/$/<br>/')
 
 echo "
 <!DOCTYPE html>
