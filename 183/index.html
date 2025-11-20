@@ -1,24 +1,3 @@
-#!/bin/bash
-
-# Get system information
-CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
-CPU_PERCENT="${CPU_USAGE}%"
-MEMORY_PERCENT=$(free -m | awk 'NR==2{printf "%.1f", $3*100/$2 }')
-MEMORY_USED=$(free -m | awk 'NR==2{printf "%.2f", $3/1024}')
-MEMORY_TOTAL=$(free -m | awk 'NR==2{printf "%.2f", $2/1024}')
-DISK_PERCENT=$(df -h / | awk 'NR==2{print $5}' | sed 's/%//')
-DISK=$(df -h / | awk 'NR==2{print $5}')
-DISK_USED=$(df -h / | awk 'NR==2{print $3}')
-DISK_TOTAL=$(df -h / | awk 'NR==2{print $2}')
-HOSTNAME=$(hostname)
-PROCESSES=$(ps aux | wc -l)
-
-# Additional Ubuntu-specific information
-OS_VERSION=$(lsb_release -d | cut -f2)
-KERNEL_VERSION=$(uname -r)
-
-# Create or update index.html
-cat > index.html << EOF
 <!DOCTYPE html>
 <html>
 <head>
@@ -137,40 +116,40 @@ cat > index.html << EOF
 <body>
     <div class="container">
         <div class="header">
-            <div class="hostname">$HOSTNAME</div>
-            <div class="os-info">$OS_VERSION | Kernel $KERNEL_VERSION</div>
+            <div class="hostname">zeed</div>
+            <div class="os-info">Ubuntu 24.04.3 LTS | Kernel 6.8.0-87-generic</div>
         </div>
         
         <div class="grid">
             <div class="card">
                 <div class="label">CPU</div>
-                <div class="value">$CPU_PERCENT</div>
+                <div class="value">9.1%</div>
                 <div class="bar">
-                    <div class="fill" style="width: $CPU_PERCENT"></div>
+                    <div class="fill" style="width: 9.1%"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="label">Memory</div>
-                <div class="value">${MEMORY_PERCENT}%</div>
-                <div class="detail">${MEMORY_USED}GB / ${MEMORY_TOTAL}GB</div>
+                <div class="value">13.8%</div>
+                <div class="detail">0.52GB / 3.78GB</div>
                 <div class="bar">
-                    <div class="fill" style="width: ${MEMORY_PERCENT}%"></div>
+                    <div class="fill" style="width: 13.8%"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="label">Disk</div>
-                <div class="value">$DISK</div>
-                <div class="detail">$DISK_USED / $DISK_TOTAL</div>
+                <div class="value">37%</div>
+                <div class="detail">6.9G / 20G</div>
                 <div class="bar">
-                    <div class="fill" style="width: $DISK"></div>
+                    <div class="fill" style="width: 37%"></div>
                 </div>
             </div>
             
             <div class="card">
                 <div class="label">Processes</div>
-                <div class="value">$PROCESSES</div>
+                <div class="value">222</div>
             </div>
         </div>
 
@@ -226,8 +205,7 @@ cat > index.html << EOF
 ==========-----=++++*%+--=+*+++*******##%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#****#*++**%*===++**#*=======
 ============---==+++=+##+--=*#+*********##%@@@@@@@@@@@@@@@@@@@@@@@%###+**##*++**#%+====+++**#+======</div>
 
-        <div class="footer">LAST UPDATE: $(date '+%Y-%m-%d %H:%M:%S')</div>
+        <div class="footer">LAST UPDATE: 2025-11-20 18:02:31</div>
     </div>
 </body>
 </html>
-EOF
