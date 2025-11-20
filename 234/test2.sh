@@ -1,3 +1,32 @@
+#!/bin/bash
+set -euo pipefail
+
+# Gather metrics
+CPU=$(top -bn1 | awk -F',' '/Cpu\(s\)/{usage=100 - $4; printf("%.1f%%", usage)}' | xargs || echo "N/A")
+MEM=$(free | awk '/Mem:/ {printf("%.1f%%", $3/$2 * 100)}' | xargs || echo "N/A")
+DISK=$(df -h / | awk 'NR==2 {print $3 " / " $2}' | xargs || echo "N/A")
+TIME=$(date +"%Y-%m-%d %H:%M:%S")
+HOSTNAME=$(hostname)
+
+# Home directory tree (fallback to find if tree not installed)
+if command -v tree >/dev/null 2>&1; then
+  RAW_TREE=$(tree /home 2>/dev/null || echo "/home: (no tree output)")
+else
+  RAW_TREE=$(find /home -maxdepth 4 -print 2>/dev/null || echo "/home: (no tree output)")
+fi
+
+# HTML-escape tree output
+escape_for_html() {
+  sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'
+}
+HOMEDIR_ESCAPED=$(printf '%s\n' "$RAW_TREE" | escape_for_html)
+
+OUT_FILE="/home/japansg/git/mss2025-project-template/234/japan.html"
+mkdir -p "$(dirname "$OUT_FILE")"
+
+# Write HTML using a here-doc. This version applies a dark green / black theme
+# and includes an interactive CSS-only toggle button to shift/expand the tree.
+cat > "$OUT_FILE" <<HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,27 +181,27 @@
   <div class="container">
     <div class="card">
       <div class="label">CPU Usage</div>
-      <div class="value">8.7%</div>
+      <div class="value">${CPU}</div>
     </div>
 
     <div class="card">
       <div class="label">Memory Usage</div>
-      <div class="value">14.6%</div>
+      <div class="value">${MEM}</div>
     </div>
 
     <div class="card">
       <div class="label">Storage Used</div>
-      <div class="value">6.5G / 20G</div>
+      <div class="value">${DISK}</div>
     </div>
 
     <div class="card">
       <div class="label">Last Updated</div>
-      <div class="value">2025-11-20 17:28:30</div>
+      <div class="value">${TIME}</div>
     </div>
 
     <div class="card">
       <div class="label">Hostname</div>
-      <div class="value">ray-server</div>
+      <div class="value">${HOSTNAME}</div>
     </div>
 
     <div class="card wide" style="margin-left:20px;">
@@ -198,34 +227,7 @@
       <div class="tree-panel">
         <div class="tree-wrapper">
           <div class="tree-card" role="region" aria-label="home directory tree">
-            <pre class="tree-pre">/home
-└── japansg
-    ├── git
-    │   └── mss2025-project-template
-    │       ├── 234
-    │       │   ├── japan.html
-    │       │   ├── japan_script.sh
-    │       │   ├── template.html
-    │       │   ├── test2.sh
-    │       │   └── test.txt
-    │       ├── index.html
-    │       ├── README.md
-    │       ├── student1
-    │       │   ├── student1.html
-    │       │   └── student1_script.sh
-    │       ├── student2
-    │       │   ├── student2.html
-    │       │   └── student2_script.sh
-    │       ├── student3
-    │       │   ├── student3.html
-    │       │   └── student3_script.sh
-    │       ├── student4
-    │       │   ├── student4.html
-    │       │   └── student4_script.sh
-    │       └── style.css
-    └── japan.html
-
-9 directories, 17 files</pre>
+            <pre class="tree-pre">${HOMEDIR_ESCAPED}</pre>
           </div>
         </div>
       </div>
@@ -233,3 +235,22 @@
   </div>
 </body>
 </html>
+HTML
+# Define your repository path and PAT
+
+REPO_DIR="/home/japansg/git/mss2025-project-template/" # e.g., /home/user/my-project
+GITHUB_USERNAME="japanSG"
+GITHUB_PAT=$(cat /home/japansg/git/mss2025-project-template/234/.pat) # Ensure this PAT has repo write permissions
+
+# Navigate to the repository directory
+cd "$REPO_DIR" || exit 1
+
+# Add all changes to staging
+git add .
+
+# Commit changes (only if there are changes)
+git diff-index --quiet HEAD || git commit -m "Automated commit from cron 234 time:$TIME"
+
+# Push to GitHub using the PAT for authentication
+git push "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git" JapanSG
+echo "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git"
