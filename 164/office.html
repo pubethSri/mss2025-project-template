@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Server Status Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Optional: Add a simple glow effect to the cards */
+        .card {
+            box-shadow: 0 4px 8px rgba(0,0,0,.5);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">📊 Ubuntu Server Status</h1>
+        <p class="text-center text-secondary">Monitoring system metrics in real-time...</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">CPU Usage</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="cpu_usage">Loading...</h5>
+                        <p class="card-text"><small class="text-white-50">Current processor load.</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Memory Usage</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="memory_display">Loading...</h5>
+                        <p class="card-text"><small class="text-white-50">Used / Total RAM.</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Storage Usage (Root)</div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="storage_usage">Loading...</h5>
+                        <p class="card-text"><small class="text-white-50">Root filesystem percentage used.</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="mt-4 p-3 bg-secondary rounded">
+            <p class="mb-1"><strong>Operating System:</strong> <span id="os_name_version">Loading...</span></p>
+            <p class="mb-1"><strong>System Boot Time:</strong> <span id="system_boot_time">Loading...</span></p>
+            <p class="mb-0"><strong>Last Metrics Read:</strong> <span id="timestamp">Loading...</span></p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function loadStatus()
+        {
+            $.getJSON("system_status.json?" + new Date().getTime(), function(data)
+            {
+                $("#cpu_usage").text(data.cpu_usage);
+                $("#memory_display").text(data.memory_usage + " / " + data.memory_total);
+                $("#storage_usage").text(data.storage_used);
+                $("#os_name_version").text(data.os_name + " " + data.os_version);
+                $("#system_boot_time").text(data.system_boot_time);
+                $("#timestamp").text(data.timestamp);
+            })
+        }
+        loadStatus();
+        setInterval(loadStatus, 1000);
+    </script>
+</body>
+</html>
