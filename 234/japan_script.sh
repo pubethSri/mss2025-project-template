@@ -80,9 +80,11 @@ echo "
     <div class="value">$HOSTNAME</div>
   </div>
 
-  <div class="card">
+  <div class="card" style="width: 100%; max-width: 800px;">
     <div class="label">Home Directory Tree</div>
-    <div class="value" style="font-size: 0.8em\; white-space: pre-wrap\;">$HOMEDIR</div>
+    <div class="value" style="font-size: 0.8em; text-align: left;">
+      <pre><code>{{HOMEDIR}}</code></pre>
+    </div>
   </div>
 
 </body>
