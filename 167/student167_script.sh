@@ -17,7 +17,7 @@ storage_usage=$(bc <<< "scale=2; 100 * $storage_used/$storage_total")
 
 last_update=$(date +'%0H:%0M:%0S %0d/%0m/%0Y')
 
-cat > index.html << EOF
+cat << EOF > /home/it67070167/mss2025-project-template/167/index.html
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -345,19 +345,19 @@ EOF
 
 
 # Define your repository path and PAT
-# 15
-# 14 REPO_DIR="/home/it67070167/git/mss2025-project-template/" # e.g., /home/user/my-project
-# 13 GITHUB_USERNAME="WissanupongChanliem"
-# 12 GITHUB_PAT=$(cat /home/it67070167/git/mss2025-project-template/167/.pat) # Ensure this PAT has repo write permissions
-# 11
-# 10 # Navigate to the repository directory
-#  9 cd "$REPO_DIR" || exit 1
-#  8
-#  7 # Add all changes to staging
-#  6 git add .
-#  5
-#  4 # Commit changes (only if there are changes)
-#  3 git diff-index --quiet HEAD || git commit -m "Automated commit from cron 167 time:$TIME"
-#  2
-#  1 # Push to GitHub using the PAT for authentication
-#  0 git push "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git" Wissanupong
+ 15
+ 14 REPO_DIR="/home/it67070167/mss2025-project-template/" # e.g., /home/user/my-project
+ 13 GITHUB_USERNAME="WissanupongChanliem"
+ 12 GITHUB_PAT=$(cat /home/it67070167/mss2025-project-template/167/.pat) # Ensure this PAT has repo write permissions
+ 11
+ 10 # Navigate to the repository directory
+  9 cd "$REPO_DIR" || exit 1
+  8
+  7 # Add all changes to staging
+  6 git add .
+  5
+  4 # Commit changes (only if there are changes)
+  3 git diff-index --quiet HEAD || git commit -m "Automated commit from cron 167 time:$last_update"
+  2
+  1 # Push to GitHub using the PAT for authentication
+  0 git push "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git" Wissanupong
