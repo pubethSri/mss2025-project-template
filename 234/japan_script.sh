@@ -71,3 +71,20 @@ echo "
 </body>
 </html>
 " > japan.html
+# Define your repository path and PAT
+
+REPO_DIR="/homt/japansg/git/mss2025-project-template/" # e.g., /home/user/my-project
+GITHUB_USERNAME="japanSG"
+GITHUB_PAT="" # Ensure this PAT has repo write permissions
+
+# Navigate to the repository directory
+cd "$REPO_DIR" || exit 1
+
+# Add all changes to staging
+git add .
+
+# Commit changes (only if there are changes)
+git diff-index --quiet HEAD || git commit -m "Automated commit from cron"
+
+# Push to GitHub using the PAT for authentication
+git push "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/${GITHUB_USERNAME}/YOUR_REPOSITORY_NAME.git" HEAD:main
