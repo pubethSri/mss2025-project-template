@@ -84,7 +84,7 @@ cd "$REPO_DIR" || exit 1
 git add .
 
 # Commit changes (only if there are changes)
-git diff-index --quiet HEAD || git commit -m "Automated commit from cron"
+git diff-index --quiet HEAD || git commit -m "Automated commit from cron 234 time:$TIME"
 
 # Push to GitHub using the PAT for authentication
 git push "https://${GITHUB_USERNAME}:${GITHUB_PAT}@github.com/Harley2zazaa/mss2025-project-template.git" JapanSG
