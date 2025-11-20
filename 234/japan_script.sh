@@ -82,7 +82,7 @@ echo "
 
   <div class="card">
     <div class="label">Home Directory Tree</div>
-    <div class="value" style="font-size: 0.8em; white-space: pre-wrap;">$HOMEDIR</div>
+    <div class="value" style="font-size: 0.8em\; white-space: pre-wrap\;">$HOMEDIR</div>
   </div>
 
 </body>
