@@ -92,7 +92,7 @@ echo "
 
 </body>
 </html>
-" > japan.html
+" > /home/japansg/git/mss2025-project-template/234/japan.html
 # Define your repository path and PAT
 
 REPO_DIR="/home/japansg/git/mss2025-project-template/" # e.g., /home/user/my-project
