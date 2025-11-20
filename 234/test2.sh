@@ -184,6 +184,7 @@ cat > "$OUT_FILE" <<HTML
         <div>
           <div class="label">Home Directory Tree</div>
         </div>
+    </div>
 
       <div class="tree-panel">
         <div class="tree-wrapper">
