@@ -1,0 +1,57 @@
+name: Auto Merge Member Branches # ตั้งชื่ออื่นได้ตามใจจ้า
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  merge-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch all branches
+        run: git fetch --all
+
+      - name: Merge all member branches into main
+        run: |
+          git checkout main
+
+          # List all remote branches except main
+          branches=$(git branch -r | grep -v "origin/main")
+
+          changed=false
+
+          echo "Merging branches:"
+          echo "$branches"
+
+          for b in $branches; do
+            echo "Merging $b..."
+            # Try merging — if conflict happens, skip the branch
+            git merge "$b" --no-ff -m "Auto-merge $b" || {
+              echo "Conflict detected in $b — skipping."
+              git merge --abort || true
+              continue
+            }
+            changed=true
+          done
+
+          if [ "$changed" = false ]; then
+            echo "No changes from any branches. Nothing to push."
+            exit 0
+          fi
+
+      - name: Push merged result to main
+        run: git push origin main

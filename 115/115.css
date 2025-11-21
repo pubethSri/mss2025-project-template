@@ -1,0 +1,87 @@
+:root {
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --text-color: #333;
+    --text-secondary: #666;
+}
+
+body {
+    font-family: 'Prompt', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.dashboard-container {
+    max-width: 900px;
+    width: 100%;
+}
+
+.header-card {
+    background: var(--primary-gradient);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(118, 75, 162, 0.2);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.header-card h1 { margin: 0; font-size: 2.5em; }
+.header-card p { margin: 10px 0 0; opacity: 0.9; font-weight: 300; }
+
+.stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+    text-align: center;
+    flex: 1 1 300px;
+    max-width: 400px;
+}
+
+.stat-card:hover { transform: translateY(-5px); }
+
+.icon { font-size: 2em; margin-bottom: 10px; display: block; }
+.label { color: var(--text-secondary); font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px; }
+.value { font-size: 2.2em; font-weight: 700; color: #4a5568; margin: 10px 0; }
+.sub-text { font-size: 0.8em; color: #a0aec0; }
+
+.progress-bar {
+    background-color: #edf2f7;
+    border-radius: 10px;
+    height: 8px;
+    width: 100%;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+.cpu-bar { background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 99%); }
+.mem-bar { background: linear-gradient(90deg, #a18cd1 0%, #fbc2eb 100%); }
+.disk-bar { background: linear-gradient(90deg, #84fab0 0%, #8fd3f4 100%); }
+
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--text-secondary);
+    font-size: 0.8em;
+}

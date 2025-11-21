@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>opto's Server Status</title>
+    <meta http-equiv="refresh" content="60">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="115.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="header-card">
+            <h1>User: opto</h1>
+            <p>Machine: Ubuntu Server 24.04 LTS</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="icon">⚡</span>
+                <div class="label">CPU Usage</div>
+                <div class="value">2.2%</div>
+                <div class="progress-bar"><div class="progress-fill cpu-bar" style="width: 2.2%"></div></div>
+            </div>
+            <div class="stat-card">
+                <span class="icon">🧠</span>
+                <div class="label">Memory Usage</div>
+                <div class="value">6.49%</div>
+                <div class="sub-text">512Mi / 7.7Gi</div>
+                <div class="progress-bar"><div class="progress-fill mem-bar" style="width: 6.49%"></div></div>
+            </div>
+            <div class="stat-card">
+                <span class="icon">💾</span>
+                <div class="label">Storage Usage</div>
+                <div class="value">36%</div>
+                <div class="sub-text">6.5G / 20G</div>
+                <div class="progress-bar"><div class="progress-fill disk-bar" style="width: 36%"></div></div>
+            </div>
+            <div class="stat-card">
+                <span class="icon">⏱️</span>
+                <div class="label">System Uptime</div>
+                <div class="value" style="font-size: 1.2em; margin-top: 20px; margin-bottom: 20px;">9 minutes</div>
+            </div>
+            <div class="stat-card">
+                <span class="icon">🐧</span>
+                <div class="label">OS Version</div>
+                <div class="value" style="font-size: 1.1em; margin-top: 20px; margin-bottom: 20px;">Ubuntu 24.04.3 LTS</div>
+            </div>
+            <div class="stat-card">
+                <span class="icon">⚖️</span>
+                <div class="label">Load Average (1m)</div>
+                <div class="value">0.00</div>
+                <div class="sub-text">System Workload</div>
+            </div>
+        </div>
+        <div class="footer">
+            Last updated at: 20 November 2025 - 23:30:01 <br>
+            Automated by Cron & Bash Script
+        </div>
+    </div>
+</body>
+</html>
