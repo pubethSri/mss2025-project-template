@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./diddy_script.sh
+/home/sarin/mss2025-project-template/183/diddy_script.sh
 
 # Define your repository path and PAT
 REPO_DIR="/home/sarin/mss2025-project-template/"
