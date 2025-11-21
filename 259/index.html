@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Status Dashboard</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body { background-color: #0d1117; color: #c9d1d9; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+.dashboard-card { background-color: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+.card-header { color: #58a6ff; font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #30363d; }
+.metric-value { font-size: 2rem; font-weight: 700; color: #58a6ff; }
+.metric-label { color: #8b949e; font-size: 0.9rem; margin-top: 5px; }
+.progress { height: 8px; border-radius: 4px; margin-top: 10px; background-color: #21262d; }
+.progress-bar { background-color: #58a6ff; }
+h1 { color: #58a6ff; text-align: center; margin-bottom: 30px; }
+.process-list { list-style: none; padding: 0; margin: 0; }
+.process-item { padding: 8px 0; border-bottom: 1px solid #30363d; color: #c9d1d9; }
+.process-item:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+<div class="container-fluid">
+  <h1>System Status Dashboard</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="dashboard-card">
+        <div class="card-header">💻 CPU Usage</div>
+        <div class="metric-value">0%</div>
+        <div class="progress">
+          <div class="progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dashboard-card">
+        <div class="card-header">🧠 Memory Usage</div>
+        <div class="metric-value">518Mb</div>
+        <div class="metric-label">of 3.8Gb Used</div>
+        <div class="progress">
+          <div class="progress-bar" style="width: 13%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dashboard-card">
+        <div class="card-header">💾 Storage Usage</div>
+        <div class="metric-value">6.4G</div>
+        <div class="metric-label">of 20G Used</div>
+        <div class="progress">
+          <div class="progress-bar" style="width: 35%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dashboard-card">
+        <div class="card-header">🕐 Last Update</div>
+        <div class="metric-value">02:22:24</div>
+        <div class="metric-label">System Time</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dashboard-card">
+        <div class="card-header">📋 Current Processes</div>
+        <ul class="process-list">
+          <li class="process-item">1 - systemd</li>
+<li class="process-item">2 - kthreadd</li>
+<li class="process-item">3 - pool_workqueue_release</li>
+<li class="process-item">4 - kworker/R-rcu_g</li>
+<li class="process-item">5 - kworker/R-rcu_p</li>
+<li class="process-item">6 - kworker/R-slub_</li>
+<li class="process-item">7 - kworker/R-netns</li>
+<li class="process-item">11 - kworker/u256:0-ext4-rsv-conversion</li>
+<li class="process-item">12 - kworker/R-mm_pe</li>
+<li class="process-item">13 - rcu_tasks_kthread</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="dashboard-card">
+        <div class="card-header">✅ System Status</div>
+        <div class="metric-value" style="font-size: 1.2rem;">Very Good</div>
+        <div class="metric-label">Uptime: 1 day, 5 hours, 42 minutes</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

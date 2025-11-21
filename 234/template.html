@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Server Stats Dashboard</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 10px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+    }
+    .label {
+      font-size: 1.2em;
+      color: #555;
+    }
+    .value {
+      font-size: 2em;
+      color: #222;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="label">CPU Usage</div>
+    <div class="value">$CPU</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Memory Usage</div>
+    <div class="value">$MEM</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Storage Used</div>
+    <div class="value">$DISK</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Last Updated</div>
+    <div class="value">$TIME</div>
+  </div>
+
+</body>
+</html>
